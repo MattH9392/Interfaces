@@ -53,33 +53,45 @@ public class PerformTests implements CollectionTest {
     }
 
 
-    public void indexArrayList() {
-
+    public Person indexArrayList(ArrayList<Person> arrayList) {
+        return (arrayList.get(size/2));
     }
 
 
-    public void searchArrayList() {
-
+    public Person searchArrayList(ArrayList<Person> arrayList) {
+        for(Person person : arrayList) {
+            if(person.getName().equals("Person" + Integer.toString(size/2)))
+                return person;
+        }
+        return null;
     }
 
 
 
     public void addHashMap() {
-
+        hashMap = new HashMap<Integer, Person>();
+        for(int i = 0; i < size; i++) {
+            Random random = new Random();
+            hashMap.put(i+1, new Person("Person" + i+1, random.nextInt(100)));
+        }
     }
 
 
-    public void indexHashMap() {
-
+    public Person indexHashMap(HashMap<Integer, Person> hashMap) {
+        return hashMap.get(size/2);
     }
 
 
-    public void searchHashMap() {
-
+    public Person searchHashMap(HashMap<Integer, Person> hashMap) {
+        for(Person person : hashMap.values()) {
+            if(person.getName().equals("Person" + size/2))
+                return person;
+        }
+        return null;
     }
 
 
-    // Uses switch to execute test
+    // Uses switch to execute tests
     public void runTest(CollectionType type, TestType test, int iterations) {
         for(int i = 0; i < iterations; i++) {
             switch(type) {
@@ -98,9 +110,30 @@ public class PerformTests implements CollectionTest {
                     break;
 
                 case ARRAY_LIST:
+                    switch(test) {
+                        case ADD:
+                            addArrayList();
+                            break;
+                        case INDEX:
+                            indexArrayList(arrayList);
+                            break;
+                        case SEARCH:
+                            searchArrayList(arrayList);
+                    }
                 
                     break;
                 case HASH_MAP:
+                    switch(test) {
+                        case ADD:
+                            addHashMap();
+                            break;
+                        case INDEX:
+                            indexHashMap(hashMap);
+                            break;
+                        case SEARCH:
+                            searchHashMap(hashMap);
+                            break;
+                    }
 
                     break;
             }
